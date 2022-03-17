@@ -1,8 +1,5 @@
 const { Router } = require("express");
 const User = require("../models").user;
-const Category = require("../models").category;
-const SkillTag = require("../models").skillTag;
-const LiveEvent = require("../models").liveEvent;
 const Offer = require("../models").offer;
 const router = new Router();
 const authMiddleware = require("../auth/middleware");
@@ -22,7 +19,6 @@ router.post("/", authMiddleware, async (req, res) => {
     tokenCost: tokenCost,
     categoryId: categoryId,
     userId: user.id,
-    name: name,
   });
   res.status(200).send(newOffer);
 });

@@ -1,6 +1,6 @@
 {
   "development": {
-    "url": "postgres://pbsieton:5Z2jnYtzQcmqaBJ_ZkpXGdpUN6jtAMsQ@tyke.db.elephantsql.com/pbsieton",
+    "url": "postgres://ootdtiif:0LVaxVMME9qOKl3GOxkLrbKLilAMwGjD@tyke.db.elephantsql.com/ootdtiif",
     "dialect": "postgres"
   },
   "test": {

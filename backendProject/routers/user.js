@@ -79,4 +79,21 @@ router.patch("/:id", authMiddleware, async (req, res) => {
   return res.status(200).send({ imageUrl });
 });
 
+router.patch("/:id/details", authMiddleware, async (req, res) => {
+  const user = req.user;
+  const getUserById = await User.findByPk(user.id);
+
+  if (!req.params.id === user.id) {
+    return res
+      .status(403)
+      .send({ message: "You are not authorized to update this profile" });
+  }
+
+  const { name, description } = req.body;
+
+  await getUserById.update({ name: name, description: description });
+
+  return res.status(200).send({ name, description });
+});
+
 module.exports = router;

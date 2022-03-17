@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      comment: {
+      message: {
         type: Sequelize.TEXT,
       },
       isAccepted: {

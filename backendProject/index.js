@@ -1,13 +1,16 @@
 const express = require("express");
 const corsMiddleWare = require("cors");
 // Auth middleware: our own code. Checks for the existence of a token in a header called `authentication`.
+const { PORT } = require("./config/constants");
 const authMiddleWare = require("./auth/middleware");
 const authRouter = require("./routers/auth");
+const requestRouter = require("./routers/requests");
 const offerRouter = require("./routers/offers");
 const categoryRouter = require("./routers/categories");
-const { PORT } = require("./config/constants");
+
 const userRouter = require("./routers/user");
 const liveEventRouter = require("./routers/liveEvents");
+const onlineEventRouter = require("./routers/onlineEvents");
 // Create an express app
 const app = express();
 
@@ -34,11 +37,13 @@ app.use(bodyParserMiddleWare);
  * Define your routes and attach our routers here (now that middlewares are configured)
  */
 app.use("/auth", authRouter);
-
+app.use("/requests", requestRouter);
 app.use("/offers", offerRouter);
 app.use("/categories", categoryRouter);
 app.use("/users", userRouter);
 app.use("/liveevents", liveEventRouter);
+app.use("/onlineevents", onlineEventRouter);
+
 // POST endpoint which requires a token for testing purposes, can be removed
 app.post("/authorized_post_request", authMiddleWare, (req, res) => {
   // accessing user that was added to req by the auth middleware

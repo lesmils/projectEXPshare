@@ -9,7 +9,7 @@ module.exports = {
           offerId: 1,
           sellerId: 1,
           buyerId: 2,
-          comment:
+          message:
             "Hey I would love to learn Javascript from you,can we make an appointment?",
           isAccepted: false,
           createdAt: new Date(),
@@ -19,7 +19,7 @@ module.exports = {
           offerId: 4,
           sellerId: 2,
           buyerId: 1,
-          comment:
+          message:
             "Hey I would love to learn how to cook some nice spaghetti some time, when are you available?",
           isAccepted: false,
           createdAt: new Date(),

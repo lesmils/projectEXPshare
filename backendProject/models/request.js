@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   request.init(
     {
-      comment: DataTypes.TEXT,
+      message: DataTypes.TEXT,
       isAccepted: DataTypes.BOOLEAN,
     },
     {

@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       time: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       imageUrl: {

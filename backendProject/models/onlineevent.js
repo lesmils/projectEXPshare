@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
-      time: DataTypes.STRING,
+      time: DataTypes.DATE,
       streamUrl: DataTypes.STRING,
       imageUrl: DataTypes.STRING,
     },
