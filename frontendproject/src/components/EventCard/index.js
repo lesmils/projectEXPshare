@@ -14,9 +14,14 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { selectUser } from "../../store/user/selectors";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Popover } from "@material-ui/core";
+import { Box } from "@mui/system";
+import { deleteLiveEvent } from "../../store/user/actions";
 
 export default function EventCard(props) {
-  // const token = useSelector(selectToken);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const {
     id,
     name,
@@ -26,24 +31,35 @@ export default function EventCard(props) {
     maxParticipants,
     time,
     durationHours,
-    // organizerId,
     tokenCost,
     organizerId,
   } = props.event;
 
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const date = moment(time).format("YYYY-MM-DD hh:mm A");
-
-  console.log(date);
 
   const handleClickRequest = () => {
     console.log("hey let's add an action here");
   };
 
   const handleClickDelete = () => {
-    console.log("hey let's add an action here");
+    console.log("hey this runs");
+    dispatch(deleteLiveEvent(id));
+    console.log("hey this also runs");
+    handleClose();
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const one = open ? "simple-popover" : undefined;
 
   return (
     <Card sx={{ maxWidth: 345, marginLeft: "25px", marginTop: "25px" }}>
@@ -88,25 +104,61 @@ export default function EventCard(props) {
       </CardContent>
       <CardActions disableSpacing></CardActions>
 
-      {user.id !== organizerId ? (
+      {organizerId === user.id ? (
         <Button
-          aria-describedby={id}
-          variant="contained"
           style={{ margin: "15px" }}
-          onClick={handleClickDelete}
-        >
-          Send Request
-        </Button>
-      ) : (
-        <Button
-          aria-describedby={id}
           variant="contained"
-          style={{ margin: "15px" }}
-          onClick={handleClickRequest}
+          onClick={handleClick}
         >
           Cancel Event
         </Button>
+      ) : (
+        <Button
+          style={{ margin: "15px" }}
+          variant="contained"
+          onClick={handleClick}
+        >
+          Join Event
+        </Button>
       )}
+
+      <Popover
+        id={one}
+        style={{ textAlign: "center", paddingTop: "20px" }}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        {user.id !== organizerId ? (
+          <Box>
+            <Typography>
+              Join Event for <strong>{tokenCost}</strong> tokens
+            </Typography>
+            <Button
+              variant="contained"
+              style={{ margin: "15px" }}
+              onClick={handleClickRequest}
+            >
+              Continue, join
+            </Button>
+          </Box>
+        ) : (
+          <Box>
+            <Typography>Are You Sure?</Typography>
+            <Button
+              variant="contained"
+              style={{ margin: "15px" }}
+              onClick={handleClickDelete}
+            >
+              Yes, cancel
+            </Button>
+          </Box>
+        )}
+      </Popover>
     </Card>
   );
 }

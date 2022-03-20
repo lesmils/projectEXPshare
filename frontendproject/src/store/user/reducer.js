@@ -52,6 +52,16 @@ export default (state = initialState, action) => {
         organizer: [...state.organizer, action.payload],
       };
 
+    case "liveEvents/liveEventsDeleted":
+      const liveEventId = action.payload;
+      console.log("what is liveEventId", liveEventId);
+      const newLiveEvents = state.organizer.filter(
+        (liveEvent) => liveEvent.id !== liveEventId
+      );
+      return {
+        ...state,
+        organizer: newLiveEvents,
+      };
     default:
       return state;
   }

@@ -50,4 +50,27 @@ router.post("/", authMiddleware, async (req, res) => {
   res.status(200).send(newLiveEvent);
 });
 
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const liveEvent = await LiveEvent.findByPk(id);
+    if (!liveEvent) {
+      return res.status(404).send("Story not found");
+    }
+
+    // Check if this user is the owner of the space
+    if (liveEvent.organizerId !== req.user.id) {
+      return res
+        .status(401)
+        .send("You're not authorized to delete this liveEvent");
+    }
+
+    await liveEvent.destroy();
+
+    res.status(200).send(id);
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;

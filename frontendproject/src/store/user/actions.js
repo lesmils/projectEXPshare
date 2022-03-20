@@ -259,7 +259,7 @@ export function postLiveEvent(
       if (token === null) return;
 
       const response = await axios.post(
-        `${apiUrl}/liveEvents`,
+        `${apiUrl}/liveevents`,
         {
           name: name,
           time: time,
@@ -278,6 +278,33 @@ export function postLiveEvent(
       dispatch(liveEventPosted(response.data));
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function liveEventDeleted(id) {
+  return {
+    type: "liveEvents/liveEventsDeleted",
+    payload: id,
+  };
+}
+
+export function deleteLiveEvent(id) {
+  return async (dispatch, getState) => {
+    const { token } = selectUser(getState());
+    if (token === null) return;
+
+    try {
+      const response = await axios.delete(`${apiUrl}/liveevents/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("LiveEvent deleted?", response.data);
+      dispatch(liveEventDeleted(id));
+    } catch (e) {
+      console.error(e);
     }
   };
 }
