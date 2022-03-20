@@ -11,8 +11,9 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { selectUser } from "../../store/user/selectors";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../store/user/selectors";
 
 export default function EventCard(props) {
   // const token = useSelector(selectToken);
@@ -27,21 +28,34 @@ export default function EventCard(props) {
     durationHours,
     // organizerId,
     tokenCost,
+    organizerId,
   } = props.event;
+
+  const user = useSelector(selectUser);
 
   const date = moment(time).format("YYYY-MM-DD hh:mm A");
 
   console.log(date);
 
-  const handleClick = () => {
+  const handleClickRequest = () => {
+    console.log("hey let's add an action here");
+  };
+
+  const handleClickDelete = () => {
     console.log("hey let's add an action here");
   };
 
   return (
-    <Card sx={{ maxWidth: 345, marginLeft: "25px" }}>
+    <Card sx={{ maxWidth: 345, marginLeft: "25px", marginTop: "25px" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
+          <Avatar
+            component={Link}
+            to={`/profiles/${organizerId}`}
+            style={{ textDecoration: "none" }}
+            sx={{ bgcolor: red[500] }}
+            aria-label="event"
+          >
             {!props.username ? "" : props.username.charAt(0)}
           </Avatar>
         }
@@ -73,9 +87,26 @@ export default function EventCard(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing></CardActions>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        Send Request
-      </Button>
+
+      {user.id !== organizerId ? (
+        <Button
+          aria-describedby={id}
+          variant="contained"
+          style={{ margin: "15px" }}
+          onClick={handleClickDelete}
+        >
+          Send Request
+        </Button>
+      ) : (
+        <Button
+          aria-describedby={id}
+          variant="contained"
+          style={{ margin: "15px" }}
+          onClick={handleClickRequest}
+        >
+          Cancel Event
+        </Button>
+      )}
     </Card>
   );
 }

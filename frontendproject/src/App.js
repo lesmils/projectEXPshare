@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./App.css";
-
 import { Routes, Route } from "react-router-dom";
 import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
@@ -13,11 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 import NavMaterial from "./components/NavMaterial";
+import OneOnlineEvent from "./pages/OneOnlineEvent";
 import OnlineEvents from "./pages/OnlineEvents";
 import LiveEvents from "./pages/LiveEvents";
 import CategoriesPage from "./pages/CategoriesPage";
 import CategoriesList from "./pages/CategoriesList";
 import MyPage from "./pages/MyPage";
+import Requests from "./pages/Requests";
 
 const Other = () => (
   <Jumbotron>
@@ -51,7 +52,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/Profiles/:id" element={<ProfilePage />} />
         <Route exact path="/onlineevents" element={<OnlineEvents />} />
+        <Route exact path="/onlineevents/:id" element={<OneOnlineEvent />} />
         <Route exact path="/liveevents" element={<LiveEvents />} />
+        <Route exact path="/requests" element={<Requests />} />
       </Routes>
     </div>
   );

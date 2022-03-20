@@ -11,13 +11,17 @@ import EventCard from "../../components/EventCard";
 import OnlineEventCard from "../../components/OnlineEventCard";
 import { Popover } from "@material-ui/core";
 import AddOffer from "../../components/AddOffer";
+import AddLiveEvent from "../../components/AddLiveEvent";
 import { useNavigate } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import ProfileImageUpload from "../../components/ProfileImageUpload";
+import DetailsForm from "../../components/DetailsForm";
 
 function MyPage() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElImage, setAnchorElImage] = React.useState(null);
+  const [anchorElDetails, setAnchorElDetails] = React.useState(null);
+  const [anchorElOffer, setAnchorElOffer] = React.useState(null);
+  const [anchorElLiveEvent, setAnchorElLiveEvent] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector(selectToken);
@@ -54,6 +58,7 @@ function MyPage() {
     eventContainer: {
       display: "flex",
       flexDirection: "row",
+      flexWrap: "wrap",
       marginTop: "20px",
       marginLeft: "20px",
       marginBottom: "50px",
@@ -61,17 +66,6 @@ function MyPage() {
   }));
 
   const classes = useStyles();
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   const handleClickImage = (event) => {
     setAnchorElImage(event.currentTarget);
@@ -83,6 +77,39 @@ function MyPage() {
 
   const openImage = Boolean(anchorElImage);
   const idImage = openImage ? "simple-popover" : undefined;
+
+  const handleClickDetails = (event) => {
+    setAnchorElDetails(event.currentTarget);
+  };
+
+  const handleCloseDetails = () => {
+    setAnchorElDetails(null);
+  };
+
+  const openDetails = Boolean(anchorElDetails);
+  const idDetails = openDetails ? "simple-popover" : undefined;
+
+  const handleClickOffer = (event) => {
+    setAnchorElOffer(event.currentTarget);
+  };
+
+  const handleCloseOffer = () => {
+    setAnchorElOffer(null);
+  };
+
+  const openOffer = Boolean(anchorElOffer);
+  const idOffer = openOffer ? "simple-popover" : undefined;
+
+  const handleClickLiveEvent = (event) => {
+    setAnchorElLiveEvent(event.currentTarget);
+  };
+
+  const handleCloseLiveEvent = () => {
+    setAnchorElLiveEvent(null);
+  };
+
+  const openLiveEvent = Boolean(anchorElLiveEvent);
+  const idLiveEvent = openLiveEvent ? "simple-popover" : undefined;
 
   return (
     <Container className={classes.container}>
@@ -104,6 +131,25 @@ function MyPage() {
           <Typography variant="p">{user.description} </Typography>
         </div>
       </Box>
+      <Button
+        aria-describedby={user.id}
+        variant="contained"
+        onClick={handleClickDetails}
+      >
+        change Details
+      </Button>
+      <Popover
+        id={idDetails}
+        open={openDetails}
+        anchorEl={anchorElDetails}
+        onClose={handleCloseDetails}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <DetailsForm user={user} />
+      </Popover>
       <Button
         aria-describedby={user.id}
         variant="contained"
@@ -146,21 +192,21 @@ function MyPage() {
         <Button
           aria-describedby={user.id}
           variant="contained"
-          onClick={handleClick}
+          onClick={handleClickOffer}
         >
           Add offer
         </Button>
         <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
+          id={idOffer}
+          open={openOffer}
+          anchorEl={anchorElOffer}
+          onClose={handleCloseOffer}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "left",
           }}
         >
-          <AddOffer token={token} id={user.id} />
+          <AddOffer />
         </Popover>
 
         {!user.offers
@@ -180,10 +226,30 @@ function MyPage() {
               return <EventCard event={event} username={user.name} />;
             })}
       </Box>
+      <Button
+        aria-describedby={user.id}
+        variant="contained"
+        onClick={handleClickLiveEvent}
+      >
+        Add Live Event
+      </Button>
+      <Popover
+        id={idLiveEvent}
+        open={openLiveEvent}
+        anchorEl={anchorElLiveEvent}
+        onClose={handleCloseLiveEvent}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <AddLiveEvent />
+      </Popover>
       <Typography variant="h5">
         <hr />
         {user.name}'s Online Events
       </Typography>
+
       <Box className={classes.eventContainer}>
         {!user.onlineEvents
           ? "loading"

@@ -127,20 +127,19 @@ export default function NewNavBar() {
     navigate("/");
   };
 
-  // function HomeIcon(props) {
-  //   return (
-  //     <SvgIcon {...props}>
-  //       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-  //     </SvgIcon>
-  //   );
-  // }
-
   return (
     <>
       <AppBar elevation={0} color="primary">
         <Toolbar>
-          <Typography component={Link} to={"/"}>
-            {/* <HomeIcon sx={{ fontSize: 40 }} /> */}
+          <Typography
+            style={{
+              textDecoration: "none",
+              color: "white",
+              marginTop: "10px",
+            }}
+            component={Link}
+            to={"/"}
+          >
             <h4>EXPshare</h4>
           </Typography>
           {isMatch ? (

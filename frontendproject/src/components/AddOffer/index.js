@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import Box from "@mui/material/Box";
+
 import Form from "react-bootstrap/Form";
+import { Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, TextField } from "@material-ui/core";
 import { selectCategories } from "../../store/categories/selectors";
 import Col from "react-bootstrap/Col";
 import { fetchCategories } from "../../store/categories/action";
@@ -49,11 +49,11 @@ export default function AddOffer(props) {
   });
 
   return (
-    <div style={{ minWidth: "550px", paddingBottom: "30px" }}>
-      <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h1 className="mt-5 mb-5">Place Offer</h1>
+    <div style={{ minWidth: "500px", paddingBottom: "30px" }}>
+      <Form as={Col} md={{ span: 8, offset: 2 }} className="mt-5">
+        <Typography variant="h4"> Place Offer</Typography>
         <Form.Group>
-          <Form.Label>Name</Form.Label>
+          <Typography>Name</Typography>
           <Form.Control
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -64,8 +64,10 @@ export default function AddOffer(props) {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Description</Form.Label>
+          <Typography>Description</Typography>
           <Form.Control
+            as="textarea"
+            rows="3"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             type="text"
@@ -74,7 +76,7 @@ export default function AddOffer(props) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>ImageUrl</Form.Label>
+          <Typography>ImageUrl</Typography>
           <Form.Control
             value={image}
             onChange={(event) => setImage(event.target.value)}
@@ -85,19 +87,18 @@ export default function AddOffer(props) {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Token Fee</Form.Label>
+          <Typography>Token Fee</Typography>
           <Form.Control
             value={tokenCost}
             onChange={(event) => setTokenCost(event.target.value)}
-            type="string"
+            type="number"
             placeholder={0}
             required
-            min={0}
           />
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Custom select</Form.Label>
+          <Typography>Pick a Category</Typography>
           <Form.Control
             as="select"
             onChange={(event) => setCategory(event.target.value)}

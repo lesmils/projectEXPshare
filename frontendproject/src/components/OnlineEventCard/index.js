@@ -28,7 +28,13 @@ export default function OnlineEventCard(props) {
     <Card sx={{ maxWidth: 345, marginLeft: "25px" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
+          <Avatar
+            component={Link}
+            to={`/profiles/${props.userId}`}
+            style={{ textDecoration: "none" }}
+            sx={{ bgcolor: red[500] }}
+            aria-label="event"
+          >
             {!props.username ? "" : props.username.charAt(0)}
           </Avatar>
         }
@@ -50,6 +56,7 @@ export default function OnlineEventCard(props) {
       <Button
         aria-describedby={id}
         variant="contained"
+        style={{ margin: "15px" }}
         onClick={handleClick}
         component={Link}
         to={`/onlineevents/${id}`}

@@ -1,22 +1,32 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Box } from "@mui/system";
+import { useDispatch } from "react-redux";
+import { deleteOffer } from "../../store/user/actions";
+import { selectUser } from "../../store/user/selectors";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Popover } from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/user/selectors";
-import { Box } from "@mui/system";
-import { useDispatch } from "react-redux";
-import { deleteOffer } from "../../store/user/actions";
+import { Form } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import { postRequest } from "../../store/requests/actions";
 
 export default function OfferCard(props) {
   const { name, imageUrl, description, tokenCost, userId, id } = props.offer;
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [message, setMessage] = useState("");
 
+  const params = useParams();
+  const sellerId = params.id;
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const offerId = id;
+  console.log("sellerId, offerId", sellerId, "and", offerId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +35,14 @@ export default function OfferCard(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  //   console.log(props.user);
+  function submitRequestForm(event) {
+    event.preventDefault();
+    dispatch(postRequest(message, offerId, sellerId));
+    setMessage("");
+    handleClose();
+  }
 
   const open = Boolean(anchorEl);
   const one = open ? "simple-popover" : undefined;
@@ -107,7 +125,34 @@ export default function OfferCard(props) {
               </Button>
             </Box>
           ) : (
-            <Typography sx={{ p: 2 }}>Submit Request</Typography>
+            //request goes here
+            <div style={{ minWidth: "400px", paddingBottom: "30px" }}>
+              <Form as={Col} md={{ span: 8, offset: 2 }} className="mt-5">
+                <Typography variant="h5"> Send Request to User </Typography>
+                <Form.Group>
+                  <Form.Label>Message</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows="3"
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                    type="text"
+                    placeholder="send a message to user"
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mt-5">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={submitRequestForm}
+                  >
+                    Send request ({tokenCost} Tokens)
+                  </Button>
+                </Form.Group>
+              </Form>
+            </div>
           )}
         </Popover>
       </CardActions>

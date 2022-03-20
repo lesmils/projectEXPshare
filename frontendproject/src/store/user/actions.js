@@ -202,3 +202,82 @@ export function updateImage(image) {
     dispatch(imageUpdated(response.data));
   };
 }
+
+export const detailsUpdated = (data) => ({
+  type: "user/updateDetails",
+  payload: data,
+});
+
+export function updateDetails(name, description) {
+  return async function thunk(dispatch, getState) {
+    const { id, token } = selectUser(getState());
+
+    console.log("What is description", description);
+    if (token === null) return;
+
+    const response = await axios.patch(
+      `${apiUrl}/users/${id}/details`,
+      {
+        description: description,
+        name: name,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    console.log("what is response", response.data);
+
+    dispatch(detailsUpdated(response.data));
+  };
+}
+
+export function liveEventPosted(liveEvent) {
+  return {
+    type: "liveEvents/postLiveEvent",
+    payload: liveEvent,
+  };
+}
+
+export function postLiveEvent(
+  name,
+  time,
+  durationHours,
+  description,
+  location,
+  image,
+  tokenCost,
+  category,
+  maxParticipants
+) {
+  return async function thunk(dispatch, getState) {
+    try {
+      // get token from the state
+      const token = selectToken(getState());
+
+      // if we have no token, stop
+      if (token === null) return;
+
+      const response = await axios.post(
+        `${apiUrl}/liveEvents`,
+        {
+          name: name,
+          time: time,
+          durationHours: durationHours,
+          description: description,
+          location: location,
+          imageUrl: image,
+          tokenCost: tokenCost,
+          categoryId: category,
+          maxParticipants: maxParticipants,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(liveEventPosted(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

@@ -1,20 +1,20 @@
 import axios from "axios";
 import { apiUrl } from "../../config/constants";
 
-export function LiveEventsFetched(events) {
+export function OnlineEventsFetched(events) {
   console.log("events?", events);
   return {
-    type: "liveEvents/getAllLiveEvents",
+    type: "onlineEvents/getAllOnlineEvents",
     payload: events,
   };
 }
 
-export const fetchLiveEvents = () => {
+export const fetchOnlineEvents = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`${apiUrl}/liveevents`);
+      const response = await axios.get(`${apiUrl}/onlineevents`);
 
-      dispatch(LiveEventsFetched(response.data));
+      dispatch(OnlineEventsFetched(response.data));
     } catch (e) {
       console.log(e.message);
     }

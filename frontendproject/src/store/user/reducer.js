@@ -20,6 +20,18 @@ export default (state = initialState, action) => {
     case TOKEN_STILL_VALID:
       return { ...state, ...action.payload };
 
+    case "user/updateImage":
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case "user/updateDetails":
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     case "offers/postOffer":
       return {
         ...state,
@@ -34,10 +46,10 @@ export default (state = initialState, action) => {
         offers: newOffer,
       };
 
-    case "user/updateImage":
+    case "liveEvents/postLiveEvent":
       return {
         ...state,
-        ...action.payload,
+        organizer: [...state.organizer, action.payload],
       };
 
     default:
