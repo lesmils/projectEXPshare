@@ -46,6 +46,12 @@ export default (state = initialState, action) => {
         offers: newOffer,
       };
 
+    case "skillTags/postSkillTag":
+      return {
+        ...state,
+        skillTags: [...state.skillTags, action.payload],
+      };
+
     case "liveEvents/postLiveEvent":
       return {
         ...state,

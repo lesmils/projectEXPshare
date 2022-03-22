@@ -308,3 +308,32 @@ export function deleteLiveEvent(id) {
     }
   };
 }
+
+export function skillTagPosted(skillTag) {
+  return {
+    type: "skillTags/postSkillTag",
+    payload: skillTag,
+  };
+}
+
+export function postSkillTag(skillTag) {
+  return async function thunk(dispatch, getState) {
+    try {
+      const token = selectToken(getState());
+      if (token === null) return;
+
+      const response = await axios.post(
+        `${apiUrl}/skilltags`,
+        {
+          name: skillTag,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(skillTagPosted(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

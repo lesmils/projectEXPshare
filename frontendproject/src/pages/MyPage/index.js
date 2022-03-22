@@ -2,26 +2,33 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectUser } from "../../store/user/selectors";
-import { Container, makeStyles } from "@material-ui/core";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import { Typography } from "@material-ui/core";
 import OfferCard from "../../components/OfferCard";
 import EventCard from "../../components/EventCard";
 import OnlineEventCard from "../../components/OnlineEventCard";
-import { Popover } from "@material-ui/core";
 import AddOffer from "../../components/AddOffer";
 import AddLiveEvent from "../../components/AddLiveEvent";
 import { useNavigate } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import ProfileImageUpload from "../../components/ProfileImageUpload";
 import DetailsForm from "../../components/DetailsForm";
+import { postSkillTag } from "../../store/user/actions";
+import {
+  Typography,
+  TextField,
+  Container,
+  makeStyles,
+  Popover,
+} from "@material-ui/core";
 
 function MyPage() {
   const [anchorElImage, setAnchorElImage] = React.useState(null);
   const [anchorElDetails, setAnchorElDetails] = React.useState(null);
   const [anchorElOffer, setAnchorElOffer] = React.useState(null);
   const [anchorElLiveEvent, setAnchorElLiveEvent] = React.useState(null);
+  const [newSkillTag, setNewSkillTag] = React.useState("");
+  const [show, setShow] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector(selectToken);
@@ -66,6 +73,17 @@ function MyPage() {
   }));
 
   const classes = useStyles();
+
+  const clickShow = () => {
+    setShow(!show);
+  };
+
+  const handleSkillTagAdd = (event) => {
+    event.preventDefault();
+    dispatch(postSkillTag(newSkillTag));
+    console.log("clicking this");
+    setNewSkillTag("");
+  };
 
   const handleClickImage = (event) => {
     setAnchorElImage(event.currentTarget);
@@ -183,6 +201,37 @@ function MyPage() {
                 {skill.name}
               </Button>
             ))}
+        {!show ? (
+          <Button
+            onClick={clickShow}
+            variant="contained"
+            color="primary"
+            size="small"
+          >
+            {" "}
+            Add SkillTag
+          </Button>
+        ) : (
+          <Box style={{ marginTop: "10px" }}>
+            <TextField
+              required
+              name="name"
+              autoFocus
+              value={newSkillTag}
+              onChange={(event) => setNewSkillTag(event.target.value)}
+            />
+            <Button
+              onClick={handleSkillTagAdd}
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              {" "}
+              Add +
+            </Button>
+          </Box>
+        )}
       </Box>
       <Box>
         <Typography variant="h5">
