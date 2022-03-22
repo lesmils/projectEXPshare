@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   hero: {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Material-Design-Background-Undesigns-00.jpg')`,
-    height: "1200px",
+    height: "100vh",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -45,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginTop: "500px",
   },
+  heroTwo: {
+    backgroundColor: "purple",
+    height: "500px",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    position: "relative",
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+
+    fontSize: "4rem",
+    color: "#fff",
+  },
 }));
 
 export default function Home() {
@@ -71,7 +85,7 @@ export default function Home() {
           </Button>
         </Box>
       </Box>
-
+      <Box className={classes.heroTwo}></Box>
       <div className="hero-container-one"></div>
     </div>
   );

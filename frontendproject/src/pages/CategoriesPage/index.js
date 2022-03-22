@@ -5,6 +5,7 @@ import { selectCategories } from "../../store/categories/selectors";
 import CategoryCard from "../../components/CategoryCard";
 import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
+import background from "./bgmat.webp";
 
 function CategoriesPage() {
   const dispatch = useDispatch();
@@ -22,7 +23,11 @@ function CategoriesPage() {
       justifyContent: "center",
       MarginTop: "400px",
       flexWrap: "wrap",
-      backgroundColor: "#FFF5EE",
+      backgroundImage: `url(${background})`,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
     },
   }));
 

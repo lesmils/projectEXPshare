@@ -7,7 +7,6 @@ import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
-
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

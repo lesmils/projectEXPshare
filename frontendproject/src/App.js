@@ -3,8 +3,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
+// import SignUp from "./pages/SignUp";
 import ProfilePage from "./pages/ProfilePage";
 import Home from "./pages/Home";
 import { Jumbotron } from "react-bootstrap";
@@ -19,6 +18,8 @@ import CategoriesPage from "./pages/CategoriesPage";
 import CategoriesList from "./pages/CategoriesList";
 import MyPage from "./pages/MyPage";
 import Requests from "./pages/Requests";
+import LogIn from "./pages/LoginNew";
+import SignUp from "./pages/SignUpNew";
 
 const Other = () => (
   <Jumbotron>
@@ -49,7 +50,7 @@ function App() {
         <Route path="/categories/:id" element={<CategoriesList />} />
         <Route path="/tokens" element={<Other />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LogIn />} />
         <Route path="/Profiles/:id" element={<ProfilePage />} />
         <Route exact path="/onlineevents" element={<OnlineEvents />} />
         <Route exact path="/onlineevents/:id" element={<OneOnlineEvent />} />

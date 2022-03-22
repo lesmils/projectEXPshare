@@ -11,23 +11,19 @@ export default function CategoryCard(props) {
 
   return (
     <Card
-      sx={{
+      style={{
         width: 345,
         maxHeight: 450,
         marginTop: "150px",
         marginLeft: "150px",
         marginRight: "150px",
+        textDecoration: "none",
       }}
       component={Link}
       to={`/categories/${id}`}
     >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="180"
-          image={imageUrl}
-          alt="green iguana"
-        />
+        <CardMedia component="img" height="180" image={imageUrl} alt={name} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}
