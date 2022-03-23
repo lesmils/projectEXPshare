@@ -337,3 +337,44 @@ export function postSkillTag(skillTag) {
     }
   };
 }
+
+export function onlineEventPosted(onlineEvent) {
+  return {
+    type: "onlineEvents/postOnlineEvent",
+    payload: onlineEvent,
+  };
+}
+
+export function postOnlineEvent(
+  name,
+  time,
+  description,
+  image,
+  streamUrl,
+  category
+) {
+  return async function thunk(dispatch, getState) {
+    try {
+      const token = selectToken(getState());
+      if (token === null) return;
+
+      const response = await axios.post(
+        `${apiUrl}/onlineevents`,
+        {
+          name: name,
+          time: time,
+          description: description,
+          imageUrl: image,
+          streamUrl: streamUrl,
+          categoryId: category,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(onlineEventPosted(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

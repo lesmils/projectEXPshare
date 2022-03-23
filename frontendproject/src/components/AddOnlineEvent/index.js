@@ -6,14 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCategories } from "../../store/categories/selectors";
 import Col from "react-bootstrap/Col";
 import { fetchCategories } from "../../store/categories/action";
-import { postLiveEvent } from "../../store/user/actions";
+import { postOnlineEvent } from "../../store/user/actions";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import { Typography } from "@material-ui/core";
+import Cloudinary from "../../components/Cloudinary";
 
-export default function AddLiveEvent(props) {
+export default function AddOnlineEvent(props) {
   const dispatch = useDispatch();
 
   // const { id, token } = props;
@@ -25,13 +26,10 @@ export default function AddLiveEvent(props) {
 
   const [name, setName] = useState("");
   const [time, setTime] = useState(new Date());
-  const [durationHours, setDurationHours] = useState(0);
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
   const [image, setImage] = useState("");
-  const [tokenCost, setTokenCost] = useState(0);
+  const [streamUrl, setStreamUrl] = useState("");
   const [category, setCategory] = useState(1);
-  const [maxParticipants, setMaxParticipants] = useState(0);
   const [message, setMessage] = useState("");
 
   const allCategories = useSelector(selectCategories);
@@ -39,47 +37,15 @@ export default function AddLiveEvent(props) {
   function submitForm(event) {
     event.preventDefault();
     dispatch(
-      postLiveEvent(
-        name,
-        time,
-        durationHours,
-        description,
-        location,
-        image,
-        tokenCost,
-        category,
-        maxParticipants
-      )
+      postOnlineEvent(name, time, description, image, streamUrl, category)
     );
     setName("");
     setTime(new Date());
     setDescription("");
-    setLocation("");
     setImage("");
-    setTokenCost(0);
     setCategory(1);
-    setMaxParticipants(0);
     setMessage("Event was created!");
   }
-
-  //   const allParams = [
-  //     name,
-  //     time,
-  //     durationHours,
-  //     description,
-  //     location,
-  //     image,
-  //     tokenCost,
-  //     category,
-  //     maxParticipants,
-  //     category,
-  //   ];
-
-  //   function clgEverything(item, index) {
-  //     console.log(`item no ${index}`, item);
-  //   }
-
-  //   allParams.forEach(clgEverything);
 
   const options = allCategories.map((category) => {
     return (
@@ -96,7 +62,7 @@ export default function AddLiveEvent(props) {
   return (
     <div style={{ minWidth: "550px", paddingBottom: "30px" }}>
       <Form as={Col} md={{ span: 8, offset: 2 }} className="mt-5">
-        <Typography variant="h4"> Create Live Event </Typography>
+        <Typography variant="h4"> Create Online Event </Typography>
         <Form.Group>
           <Typography>Name</Typography>
           <Form.Control
@@ -133,60 +99,18 @@ export default function AddLiveEvent(props) {
         </Form.Group>
 
         <Form.Group>
-          <Typography>Location (City)</Typography>
-          <Form.Control
-            value={location}
-            onChange={(event) => setLocation(event.target.value)}
-            type="string"
-            placeholder="City"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group>
           <Typography>ImageUrl</Typography>
+          <Cloudinary image={setImage} />
+        </Form.Group>
+
+        <Form.Group>
+          <Typography>Youtube Stream URL</Typography>
           <Form.Control
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
+            value={streamUrl}
+            onChange={(event) => setStreamUrl(event.target.value)}
             type="string"
-            placeholder="place a url to an image here"
+            placeholder="Stream Url Here"
             required
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Typography>Duration (hours)</Typography>
-          <Form.Control
-            value={durationHours}
-            onChange={(event) => setDurationHours(event.target.value)}
-            type="number"
-            placeholder={0}
-            required
-            min={0}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Typography>Token Fee</Typography>
-          <Form.Control
-            value={tokenCost}
-            onChange={(event) => setTokenCost(event.target.value)}
-            type="number"
-            placeholder={0}
-            required
-            min={0}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Typography>Maximum Number of Participants</Typography>
-          <Form.Control
-            value={maxParticipants}
-            onChange={(event) => setMaxParticipants(event.target.value)}
-            type="number"
-            placeholder={0}
-            required
-            min={0}
           />
         </Form.Group>
 

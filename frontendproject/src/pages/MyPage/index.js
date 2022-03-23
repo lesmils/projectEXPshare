@@ -9,6 +9,7 @@ import EventCard from "../../components/EventCard";
 import OnlineEventCard from "../../components/OnlineEventCard";
 import AddOffer from "../../components/AddOffer";
 import AddLiveEvent from "../../components/AddLiveEvent";
+import AddOnlineEvent from "../../components/AddOnlineEvent";
 import { useNavigate } from "react-router-dom";
 import { selectToken } from "../../store/user/selectors";
 import ProfileImageUpload from "../../components/ProfileImageUpload";
@@ -27,6 +28,7 @@ function MyPage() {
   const [anchorElDetails, setAnchorElDetails] = React.useState(null);
   const [anchorElOffer, setAnchorElOffer] = React.useState(null);
   const [anchorElLiveEvent, setAnchorElLiveEvent] = React.useState(null);
+  const [anchorElOnlineEvent, setAnchorElOnlineEvent] = React.useState(null);
   const [newSkillTag, setNewSkillTag] = React.useState("");
   const [show, setShow] = React.useState(false);
   const dispatch = useDispatch();
@@ -129,6 +131,17 @@ function MyPage() {
   const openLiveEvent = Boolean(anchorElLiveEvent);
   const idLiveEvent = openLiveEvent ? "simple-popover" : undefined;
 
+  const handleClickOnlineEvent = (event) => {
+    setAnchorElOnlineEvent(event.currentTarget);
+  };
+
+  const handleCloseOnlineEvent = () => {
+    setAnchorElOnlineEvent(null);
+  };
+
+  const openOnlineEvent = Boolean(anchorElOnlineEvent);
+  const idOnlineEvent = openOnlineEvent ? "simple-popover" : undefined;
+
   return (
     <Container className={classes.container}>
       <Box
@@ -190,11 +203,12 @@ function MyPage() {
       <Box
         sx={{
           marginTop: "60px",
+          maxWidth: "700px",
         }}
       >
         <Typography variant="h5">{user.name}'s SkillTags</Typography>
         {!user.skillTags
-          ? "loading"
+          ? "no skillTags Yet"
           : user.skillTags.map((skill) => (
               <Button variant="outlined" size="small">
                 {" "}
@@ -259,7 +273,7 @@ function MyPage() {
         </Popover>
 
         {!user.offers
-          ? "loading"
+          ? "No Offers Yet"
           : user.offers.map((offer) => {
               return <OfferCard offer={offer} />;
             })}
@@ -270,7 +284,7 @@ function MyPage() {
       </Typography>
       <Box className={classes.eventContainer}>
         {!user.organizer
-          ? "loading"
+          ? "No Events Yet"
           : user.organizer.map((event) => {
               return <EventCard event={event} username={user.name} />;
             })}
@@ -301,11 +315,30 @@ function MyPage() {
 
       <Box className={classes.eventContainer}>
         {!user.onlineEvents
-          ? "loading"
+          ? "No Events Yet"
           : user.onlineEvents.map((event) => {
               return <OnlineEventCard event={event} username={user.name} />;
             })}
       </Box>
+      <Button
+        aria-describedby={user.id}
+        variant="contained"
+        onClick={handleClickOnlineEvent}
+      >
+        Add Online Event
+      </Button>
+      <Popover
+        id={idOnlineEvent}
+        open={openOnlineEvent}
+        anchorEl={anchorElOnlineEvent}
+        onClose={handleCloseOnlineEvent}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <AddOnlineEvent />
+      </Popover>
     </Container>
   );
 }

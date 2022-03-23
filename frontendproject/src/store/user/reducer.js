@@ -68,6 +68,13 @@ export default (state = initialState, action) => {
         ...state,
         organizer: newLiveEvents,
       };
+
+    case "onlineEvents/postOnlineEvent":
+      return {
+        ...state,
+        onlineEvents: [...state.onlineEvents, action.payload],
+      };
+
     default:
       return state;
   }

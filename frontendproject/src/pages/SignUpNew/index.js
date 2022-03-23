@@ -42,6 +42,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const navigate = useNavigate();
@@ -54,6 +55,9 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!name || !email || !password) {
+      setMessage("Please provide the information requested");
+    }
     dispatch(signUp(name, email, password));
     setEmail("");
     setPassword("");
@@ -142,6 +146,8 @@ export default function SignUp() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
+
+              <Typography style={{ color: "red" }}>{message}</Typography>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

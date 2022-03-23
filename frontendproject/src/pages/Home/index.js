@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import AnimatedText from "../../components/TextAnimation";
+
 const useStyles = makeStyles((theme) => ({
   hero: {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Material-Design-Background-Undesigns-00.jpg')`,
@@ -26,8 +28,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     height: "600px",
-    width: "33.333%",
+    width: "32.333%",
     textAlign: "center",
+    color: "whitesmoke",
+    textShadow: "7px 7px #000000",
   },
   startButton: {
     display: "flex",
@@ -64,29 +68,49 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
   const { token } = useSelector(selectUser);
-  console.log("token?", token);
   return (
     <div>
       <Box className={classes.hero}>
-        <Box className={classes.animation}>EXPShare</Box>
+        <Box className={classes.animation}>
+          <strong>EXP Share </strong>
+          <AnimatedText />
+        </Box>
         <Box className={classes.startButton}>
-          <Button
-            margin="auto"
-            height="300px"
-            disableElevation
-            disableRipple
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            component={Link}
-            to={"/signup"}
-          >
-            <h5>Start Learning Now</h5>
-          </Button>
+          {!token ? (
+            <Button
+              margin="auto"
+              height="300px"
+              disableElevation
+              disableRipple
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              component={Link}
+              to={"/signup"}
+            >
+              {" "}
+              <h5>Start Learning Now</h5>
+            </Button>
+          ) : (
+            <Button
+              margin="auto"
+              height="300px"
+              disableElevation
+              disableRipple
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              component={Link}
+              to={"/categories"}
+            >
+              {" "}
+              <h5>Explore</h5>
+            </Button>
+          )}
         </Box>
       </Box>
-      <Box className={classes.heroTwo}></Box>
-      <div className="hero-container-one"></div>
+      {/* <Box className={classes.heroTwo}></Box> */}
+      {/* <div className="hero-container-one"></div> */}
     </div>
   );
 }
