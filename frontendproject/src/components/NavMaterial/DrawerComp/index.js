@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   List,
   ListItem,
@@ -9,8 +10,15 @@ import {
   Drawer,
 } from "@material-ui/core";
 import Menu from "@mui/icons-material/Menu";
+import { selectToken } from "../../../store/user/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../../../store/user/actions";
 
 export default function DrawerComp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector(selectToken);
   const useStyles = makeStyles((theme) => ({
     drawerContainer: {},
     iconButtonContainer: {
@@ -23,9 +31,19 @@ export default function DrawerComp() {
     },
   }));
 
+  const CloseMenuLogout = () => {
+    setOpenDrawer(false);
+    dispatch(logOut());
+    navigate("/");
+  };
+
+  const CloseMenuLogin = () => {
+    setOpenDrawer(false);
+    navigate("/login");
+  };
+
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  //Css
   const classes = useStyles();
 
   return (
@@ -39,34 +57,61 @@ export default function DrawerComp() {
       >
         <List>
           <ListItem divider button onClick={() => setOpenDrawer(false)}>
-            <ListItemIcon>
-              <ListItemText> Categories</ListItemText>
-            </ListItemIcon>
+            <Link
+              to={"/categories"}
+              style={{ textDecoration: "none", color: "grey" }}
+            >
+              <ListItemIcon>
+                <ListItemText> Categories</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
 
           <ListItem divider button onClick={() => setOpenDrawer(false)}>
-            <ListItemIcon>
-              <ListItemText> Live Events</ListItemText>
-            </ListItemIcon>
+            <Link
+              to={"/liveevents"}
+              style={{ textDecoration: "none", color: "grey" }}
+            >
+              <ListItemIcon>
+                <ListItemText> Live Events</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
 
           <ListItem divider button onClick={() => setOpenDrawer(false)}>
-            <ListItemIcon>
-              <ListItemText> Online Events</ListItemText>
-            </ListItemIcon>
+            <Link
+              to={"/onlineevents"}
+              style={{ textDecoration: "none", color: "grey" }}
+            >
+              <ListItemIcon>
+                <ListItemText> Online Events</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
 
           <ListItem divider button onClick={() => setOpenDrawer(false)}>
-            <ListItemIcon>
-              <ListItemText> Tokens</ListItemText>
-            </ListItemIcon>
+            <Link
+              to={"/tokens"}
+              style={{ textDecoration: "none", color: "grey" }}
+            >
+              <ListItemIcon>
+                <ListItemText> Tokens</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
-
-          <ListItem divider button onClick={() => setOpenDrawer(false)}>
-            <ListItemIcon>
-              <ListItemText> Login/Log Out</ListItemText>
-            </ListItemIcon>
-          </ListItem>
+          {!token ? (
+            <ListItem divider button onClick={() => CloseMenuLogin(false)}>
+              <ListItemIcon>
+                <ListItemText> Login</ListItemText>
+              </ListItemIcon>
+            </ListItem>
+          ) : (
+            <ListItem divider button onClick={() => CloseMenuLogout(false)}>
+              <ListItemIcon>
+                <ListItemText> Log Out</ListItemText>
+              </ListItemIcon>
+            </ListItem>
+          )}
         </List>
       </Drawer>
       <IconButton

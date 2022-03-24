@@ -1,5 +1,6 @@
 const initialState = {
   allOnlineEvents: [],
+  oneOnlineEvent: {},
 };
 
 export default (state = initialState, action) => {
@@ -9,6 +10,13 @@ export default (state = initialState, action) => {
         ...state,
         allOnlineEvents: [...action.payload],
       };
+
+    case "onlineEvents/getOneOnlineEvent":
+      return {
+        ...state,
+        oneOnlineEvent: { ...state.oneOnlineEvent, ...action.payload },
+      };
+
     default:
       return state;
   }

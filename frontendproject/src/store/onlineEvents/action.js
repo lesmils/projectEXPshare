@@ -20,3 +20,21 @@ export const fetchOnlineEvents = () => {
     }
   };
 };
+
+export function oneOnlineEventFetched(event) {
+  return {
+    type: "onlineEvents/getOneOnlineEvent",
+    payload: event,
+  };
+}
+
+export const fetchOneOnlineEvent = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`${apiUrl}/onlineevents/${id}`);
+      dispatch(oneOnlineEventFetched(response.data));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};
