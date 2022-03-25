@@ -13,9 +13,6 @@ import { postOffer } from "../../store/user/actions";
 export default function AddOffer(props) {
   const dispatch = useDispatch();
 
-  // const { id, token } = props;
-  // console.log("what is id?", id, "what is token", token);
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
@@ -27,9 +24,6 @@ export default function AddOffer(props) {
   const [category, setCategory] = useState(1);
 
   const allCategories = useSelector(selectCategories);
-  // console.log("what are categories", allCategories);
-
-  // console.log(name, description, image, tokenCost, category);
 
   function submitForm(event) {
     event.preventDefault();

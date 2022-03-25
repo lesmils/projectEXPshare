@@ -27,8 +27,6 @@ export function postRequest(message, offerId, sellerId) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      // dispatch(requestPosted(response.data));
-      //console.log("what is the response", response.data);
     } catch (error) {
       console.log(error);
     }

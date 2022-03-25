@@ -26,7 +26,6 @@ export default function OfferCard(props) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const offerId = id;
-  console.log("sellerId, offerId", sellerId, "and", offerId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +35,6 @@ export default function OfferCard(props) {
     setAnchorEl(null);
   };
 
-  //   console.log(props.user);
   function submitRequestForm(event) {
     event.preventDefault();
     dispatch(postRequest(message, offerId, sellerId));

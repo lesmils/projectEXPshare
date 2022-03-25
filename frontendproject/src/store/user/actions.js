@@ -79,21 +79,15 @@ export const login = (email, password) => {
 
 export const getUserWithStoredToken = () => {
   return async (dispatch, getState) => {
-    // get token from the state
     const token = selectToken(getState());
-
-    // if we have no token, stop
     if (token === null) return;
 
     dispatch(appLoading());
     try {
-      // if we do have a token,
-      // check wether it is still valid or if it is expired
       const response = await axios.get(`${apiUrl}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // token is still valid
       dispatch(tokenStillValid(response.data));
       dispatch(appDoneLoading());
     } catch (error) {
@@ -102,8 +96,6 @@ export const getUserWithStoredToken = () => {
       } else {
         console.log(error);
       }
-      // if we get a 4xx or 5xx response,
-      // get rid of the token by logging out
       dispatch(logOut());
       dispatch(appDoneLoading());
     }
@@ -120,10 +112,7 @@ export function offerPosted(offer) {
 export function postOffer(name, description, image, tokenCost, category) {
   return async function thunk(dispatch, getState) {
     try {
-      // get token from the state
       const token = selectToken(getState());
-
-      // if we have no token, stop
       if (token === null) return;
 
       const response = await axios.post(
@@ -140,7 +129,6 @@ export function postOffer(name, description, image, tokenCost, category) {
         }
       );
       dispatch(offerPosted(response.data));
-      //console.log("what is the response", response.data);
     } catch (error) {
       console.log(error);
     }
@@ -166,7 +154,6 @@ export const deleteOffer = (id) => {
         },
       });
 
-      console.log("Offer deleted?", response.data);
       dispatch(offerDeleted(id));
     } catch (e) {
       console.error(e);
@@ -180,11 +167,8 @@ export const imageUpdated = (data) => ({
 });
 
 export function updateImage(image) {
-  console.log("What is image", image);
   return async function thunk(dispatch, getState) {
     const { id, token } = selectUser(getState());
-    // console.log("what are id and token", id, token);
-    console.log("What is image", image);
     if (token === null) return;
 
     const response = await axios.patch(
@@ -196,8 +180,6 @@ export function updateImage(image) {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-
-    console.log("what is response", response.data);
 
     dispatch(imageUpdated(response.data));
   };
@@ -212,7 +194,6 @@ export function updateDetails(name, description) {
   return async function thunk(dispatch, getState) {
     const { id, token } = selectUser(getState());
 
-    console.log("What is description", description);
     if (token === null) return;
 
     const response = await axios.patch(
@@ -225,9 +206,6 @@ export function updateDetails(name, description) {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-
-    console.log("what is response", response.data);
-
     dispatch(detailsUpdated(response.data));
   };
 }
@@ -301,7 +279,6 @@ export function deleteLiveEvent(id) {
         },
       });
 
-      console.log("LiveEvent deleted?", response.data);
       dispatch(liveEventDeleted(id));
     } catch (e) {
       console.error(e);
@@ -378,3 +355,22 @@ export function postOnlineEvent(
     }
   };
 }
+
+export function usersSearchFetched(users) {
+  return {
+    type: "users/getFoundUsers",
+    payload: users,
+  };
+}
+
+export const fetchUsersSearch = (searchInput) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`${apiUrl}/users/search/${searchInput}`);
+
+      dispatch(usersSearchFetched(response.data));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};

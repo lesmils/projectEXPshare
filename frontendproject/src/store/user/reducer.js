@@ -60,7 +60,6 @@ export default (state = initialState, action) => {
 
     case "liveEvents/liveEventsDeleted":
       const liveEventId = action.payload;
-      console.log("what is liveEventId", liveEventId);
       const newLiveEvents = state.organizer.filter(
         (liveEvent) => liveEvent.id !== liveEventId
       );
@@ -73,6 +72,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         onlineEvents: [...state.onlineEvents, action.payload],
+      };
+
+    case "users/getFoundUsers":
+      console.log("payload", action.payload);
+      return {
+        ...state,
+        foundUsers: [action.payload],
       };
 
     default:

@@ -45,9 +45,8 @@ export default function EventCard(props) {
   };
 
   const handleClickDelete = () => {
-    console.log("hey this runs");
     dispatch(deleteLiveEvent(id));
-    console.log("hey this also runs");
+
     handleClose();
   };
 

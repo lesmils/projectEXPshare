@@ -83,7 +83,6 @@ function MyPage() {
   const handleSkillTagAdd = (event) => {
     event.preventDefault();
     dispatch(postSkillTag(newSkillTag));
-    console.log("clicking this");
     setNewSkillTag("");
   };
 
@@ -184,6 +183,7 @@ function MyPage() {
       <Button
         aria-describedby={user.id}
         variant="contained"
+        color="primary"
         onClick={handleClickImage}
       >
         change Image

@@ -11,13 +11,9 @@ import { updateDetails } from "../../store/user/actions";
 
 export default function DetailsForm(props) {
   const dispatch = useDispatch();
-
-  // const { id, token } = props;
-  // console.log("what is id?", id, "what is token", token);
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  //   console.log(props.user);
+
   function submitForm(event) {
     event.preventDefault();
     dispatch(updateDetails(name, description));

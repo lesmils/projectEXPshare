@@ -6,8 +6,7 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function CategoryCard(props) {
-  const { imageUrl, name, id, users } = props.category;
-  console.log("users", users);
+  const { imageUrl, name, id } = props.category;
 
   return (
     <Card

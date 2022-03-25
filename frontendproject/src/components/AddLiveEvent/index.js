@@ -16,9 +16,6 @@ import { Typography } from "@material-ui/core";
 export default function AddLiveEvent(props) {
   const dispatch = useDispatch();
 
-  // const { id, token } = props;
-  // console.log("what is id?", id, "what is token", token);
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
@@ -61,25 +58,6 @@ export default function AddLiveEvent(props) {
     setMaxParticipants(0);
     setMessage("Event was created!");
   }
-
-  //   const allParams = [
-  //     name,
-  //     time,
-  //     durationHours,
-  //     description,
-  //     location,
-  //     image,
-  //     tokenCost,
-  //     category,
-  //     maxParticipants,
-  //     category,
-  //   ];
-
-  //   function clgEverything(item, index) {
-  //     console.log(`item no ${index}`, item);
-  //   }
-
-  //   allParams.forEach(clgEverything);
 
   const options = allCategories.map((category) => {
     return (

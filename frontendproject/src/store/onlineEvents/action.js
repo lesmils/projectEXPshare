@@ -2,7 +2,6 @@ import axios from "axios";
 import { apiUrl } from "../../config/constants";
 
 export function OnlineEventsFetched(events) {
-  console.log("events?", events);
   return {
     type: "onlineEvents/getAllOnlineEvents",
     payload: events,

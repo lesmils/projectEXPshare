@@ -6,7 +6,6 @@ import MessageBox from "./components/MessageBox";
 // import SignUp from "./pages/SignUp";
 import ProfilePage from "./pages/ProfilePage";
 import Home from "./pages/Home";
-import { Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
@@ -20,12 +19,8 @@ import MyPage from "./pages/MyPage";
 import Requests from "./pages/Requests";
 import LogIn from "./pages/LoginNew";
 import SignUp from "./pages/SignUpNew";
-
-const Other = () => (
-  <Jumbotron>
-    <h1>Other</h1>
-  </Jumbotron>
-);
+import SearchResults from "./pages/SearchResults";
+import Tokens from "./pages/Tokens";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +43,7 @@ function App() {
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/categories/:id" element={<CategoriesList />} />
-        <Route path="/tokens" element={<Other />} />
+        <Route path="/tokens" element={<Tokens />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/Profiles/:id" element={<ProfilePage />} />
@@ -56,6 +51,7 @@ function App() {
         <Route exact path="/onlineevents/:id" element={<OneOnlineEvent />} />
         <Route exact path="/liveevents" element={<LiveEvents />} />
         <Route exact path="/requests" element={<Requests />} />
+        <Route exact path="/search/:searchword" element={<SearchResults />} />
       </Routes>
     </div>
   );

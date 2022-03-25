@@ -19,27 +19,31 @@ export default function UserCard(props) {
         marginTop: "30px",
       }}
     >
-      <CardActionArea>
-        <CardMedia component="img" height="140" image={imageUrl} alt={name} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <strong>Skill Tags: </strong>
-            <br />
-            <br />
-            {!skillTags
-              ? "loading"
-              : skillTags.map((skill) => (
-                  <Button variant="outlined" size="small">
-                    {" "}
-                    {skill.name}
-                  </Button>
-                ))}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      {!props.user ? (
+        "loading"
+      ) : (
+        <CardActionArea>
+          <CardMedia component="img" height="140" image={imageUrl} alt={name} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <strong>Skill Tags: </strong>
+              <br />
+              <br />
+              {!skillTags
+                ? "loading"
+                : skillTags.map((skill) => (
+                    <Button variant="outlined" size="small">
+                      {" "}
+                      {skill.name}
+                    </Button>
+                  ))}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      )}
       <CardActions>
         <Button
           size="small"

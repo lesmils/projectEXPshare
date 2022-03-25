@@ -2,7 +2,6 @@ import axios from "axios";
 import { apiUrl } from "../../config/constants";
 
 export function LiveEventsFetched(events) {
-  console.log("events?", events);
   return {
     type: "liveEvents/getAllLiveEvents",
     payload: events,

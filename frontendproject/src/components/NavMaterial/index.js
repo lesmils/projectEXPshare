@@ -13,8 +13,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-
-// import DrawerComponent from "./DrawerComponent/DrawerComponent";
 import DrawerComp from "./DrawerComp";
 import CategoryIcon from "@mui/icons-material/Category";
 import EventIcon from "@mui/icons-material/Event";
@@ -30,7 +28,6 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../store/user/actions";
 import { selectUser } from "../../store/user/selectors";
 import { useNavigate } from "react-router-dom";
-// import SvgIcon from "@mui/material/SvgIcon";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -103,6 +100,7 @@ export default function NewNavBar() {
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [search, setSearch] = useState("");
   const token = useSelector(selectToken);
   const classes = useStyles();
   const theme = useTheme();
@@ -125,6 +123,11 @@ export default function NewNavBar() {
     setAnchorEl(null);
     dispatch(logOut());
     navigate("/");
+  };
+
+  const submitSearch = () => {
+    navigate(`/search/${search.toLowerCase()}`);
+    setSearch("");
   };
 
   return (
@@ -192,6 +195,15 @@ export default function NewNavBar() {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ "aria-label": "search" }}
+                  value={search}
+                  onChange={(event) => {
+                    setSearch(event.target.value);
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      submitSearch();
+                    }
+                  }}
                 />
               </Search>
               {!token ? (
@@ -237,8 +249,8 @@ export default function NewNavBar() {
           <MenuItem onClick={CloseMenu} component={Link} to={"/MyPage"}>
             My Account
           </MenuItem>
-          <MenuItem onClick={CloseMenu} component={Link} to={"/Messages"}>
-            Messages
+          <MenuItem onClick={CloseMenu} component={Link} to={"/requests"}>
+            Requests
           </MenuItem>
           <MenuItem onClick={CloseMenu} component={Link} to={"/Settings"}>
             Settings

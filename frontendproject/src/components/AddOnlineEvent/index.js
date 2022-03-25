@@ -17,9 +17,6 @@ import Cloudinary from "../../components/Cloudinary";
 export default function AddOnlineEvent(props) {
   const dispatch = useDispatch();
 
-  // const { id, token } = props;
-  // console.log("what is id?", id, "what is token", token);
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);

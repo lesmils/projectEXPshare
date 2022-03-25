@@ -18,14 +18,12 @@ export default function OnlineEventCard(props) {
 
   const date = moment(time).format("YYYY-MM-DD hh:mm A");
 
-  console.log(date);
-
   const handleClick = () => {
     console.log("hey let's add an action here");
   };
 
   return (
-    <Card sx={{ maxWidth: 345, marginLeft: "25px" }}>
+    <Card sx={{ maxWidth: 345, marginLeft: "25px", marginTop: "10px" }}>
       <CardHeader
         avatar={
           <Avatar

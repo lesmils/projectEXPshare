@@ -44,7 +44,6 @@ const Chat = ({ socket, username, room }) => {
   const [messageList, setMessageList] = useState([]);
 
   const sendMessage = async () => {
-    console.log("hey I clicked");
     if (currentMessage !== "") {
       const messageData = {
         room: room,
@@ -57,7 +56,6 @@ const Chat = ({ socket, username, room }) => {
       };
       await socket.emit("send_message", messageData);
       setMessageList((list) => [...list, messageData]);
-      console.log("messagelist", messageList);
       setCurrentMessage("");
     }
   };
@@ -79,59 +77,6 @@ const Chat = ({ socket, username, room }) => {
       </Grid>
       <Grid className={classes.chatSection}>
         <Grid>
-          {/* <List>
-            <ListItem button key="RemySharp">
-              <ListItemIcon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://material-ui.com/static/images/avatar/1.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="John Wick"></ListItemText>
-            </ListItem>
-          </List>
-          <Divider />
-          <Grid item xs={12} style={{ padding: "10px" }}>
-            <TextField
-              id="outlined-basic-email"
-              label="Search"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Divider />
-          <List>
-            <ListItem button key="RemySharp">
-              <ListItemIcon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://material-ui.com/static/images/avatar/1.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-              <ListItemText secondary="online" align="right"></ListItemText>
-            </ListItem>
-            <ListItem button key="Alice">
-              <ListItemIcon>
-                <Avatar
-                  alt="Alice"
-                  src="https://material-ui.com/static/images/avatar/3.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Alice">Alice</ListItemText>
-            </ListItem>
-            <ListItem button key="CindyBaker">
-              <ListItemIcon>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="https://material-ui.com/static/images/avatar/2.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid item xs={9}> */}
           <ScrollToBottom className={classes.messageArea}>
             {messageList.map((messageContent, index) => {
               return (
@@ -161,51 +106,6 @@ const Chat = ({ socket, username, room }) => {
               );
             })}
           </ScrollToBottom>
-
-          {/* 
-
-          <List className={classes.messageArea}>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="Hey man, What's up ?"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="09:30"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="2">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="left"
-                    primary="Hey, Iam Good! What about you ?"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="left" secondary="09:31"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="3">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="Cool. i am good, let's catch up!"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="10:30"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-          </List> */}
-
           <Divider />
           <Grid container style={{ padding: "20px" }}>
             <Grid item xs={11}>
